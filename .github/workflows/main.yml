@@ -100,7 +100,7 @@ jobs:
         run: |
           # Convert username to lowercase and add newline, then hash
           GITHUB_USER_HASHED=$(echo "${{ secrets.USERNAME_GITHUB }}" | awk '{print tolower($0)}' | shasum -a 256 | cut -c1-12 )
-          echo "username_hashed=${GITHUB_USER_HASHED}" >> $GITHUB_OUTPUT
+          echo "username_hashed=${GITHUB_USER_HASHED}" >> "$GITHUB_OUTPUT"
           echo "Generated username hash: ${GITHUB_USER_HASHED}"
           
       - name: Configure Git and Deploy
@@ -114,4 +114,4 @@ jobs:
       - name: Cleanup
         if: always()
         run: |
-          rm -f ~/.ssh/id_rsa
+          rm -f ~/.ssh/id_rsa ~/.ssh/sync_key
