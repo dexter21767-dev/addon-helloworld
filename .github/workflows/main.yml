@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy
-        uses: stremio/beamup-deploy-action@v1
+        uses: Stremio/beamup-deploy-action@v1.0.0
         with:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           beamup_host: ${{ secrets.BEAMUP_HOST }}
