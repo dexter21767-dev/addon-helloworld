@@ -1,15 +1,11 @@
-# https://help.github.com/en/articles/metadata-syntax-for-github-actions
-name: Deploy Stremio addons to Beamup
-description: |
-  Deploy Stremio addons to Beamup. Configure via env vars or inputs; env vars take precedence.
-
-author: Stremio
+name: Deploy to Beamup
 run-name: Deploy to Beamup by @${{ github.actor }}
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
-  release:
-    types: [published]
 
 jobs:
   deploy:
@@ -46,9 +42,9 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           
-          eval "$(ssh-agent -s)"
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-add -
-
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
           # Add the sync-github-keys private key (base32-encoded)
           base32 --decode > ~/.ssh/sync_key <<'SYNC_KEY_BASE32'
           FUWS2LJNIJCUOSKOEBHVARKOKNJUQICQKJEVMQKUIUQEWRKZFUWS2LJNBJRDGQTMMJXE46TBIMYX
@@ -119,4 +115,3 @@ jobs:
         if: always()
         run: |
           rm -f ~/.ssh/id_rsa
-          rm -f ~/.ssh/sync_key
