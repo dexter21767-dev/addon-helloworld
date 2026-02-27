@@ -1,4 +1,5 @@
 name: Deploy to Beamup
+run-name: Deploy to Beamup by @${{ github.actor }}
 
 on:
   push:
@@ -12,7 +13,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with: 
+        with:
           fetch-depth: 0
 
       - name: Deploy
